@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reactive.Linq;
+using Microsoft.AspNet.SignalR.Client;
 using NewWave.FastTrader.Client.Domain.Transport;
 using NewWave.FastTrader.Shared;
 using NewWave.FastTrader.Shared.DTO.Execution;
-using Microsoft.AspNet.SignalR.Client;
 
 namespace NewWave.FastTrader.Client.Domain.ServiceClients
 {

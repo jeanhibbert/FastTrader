@@ -5,8 +5,8 @@ using NewWave.FastTrader.Server.Transport;
 using NewWave.FastTrader.Shared;
 using NewWave.FastTrader.Shared.DTO.Pricing;
 using log4net;
-using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNet.SignalR;
 
 namespace NewWave.FastTrader.Server.Pricing
 {

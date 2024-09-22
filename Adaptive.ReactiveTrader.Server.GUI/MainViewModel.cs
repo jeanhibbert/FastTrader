@@ -7,7 +7,6 @@ using NewWave.FastTrader.Server.ReferenceData;
 using NewWave.FastTrader.Shared.Extensions;
 using NewWave.FastTrader.Shared.UI;
 using log4net;
-using Microsoft.Owin.Hosting;
 
 namespace NewWave.FastTrader.Server
 {
@@ -113,7 +112,7 @@ namespace NewWave.FastTrader.Server
 
             try
             {
-                _signalr = WebApp.Start(Address);
+                //_signalr = WebApp.Start(Address);
             }
             catch (Exception exception)
             {
