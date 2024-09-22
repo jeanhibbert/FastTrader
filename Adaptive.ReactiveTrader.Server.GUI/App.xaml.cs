@@ -4,9 +4,7 @@ using NewWave.FastTrader.Server;
 using NewWave.FastTrader.Server.Pricing;
 using Autofac;
 using log4net;
-using Microsoft.Owin;
 
-[assembly: OwinStartup(typeof(Startup))]
 
 namespace NewWave.FastTrader.Server
 {

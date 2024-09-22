@@ -1,31 +1,61 @@
-﻿using NewWave.FastTrader.Server.Transport;
+﻿using Autofac;
 using Microsoft.AspNet.SignalR;
-using Microsoft.Owin.Cors;
-using Owin;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using NewWave.FastTrader.Server.Pricing;
+using NewWave.FastTrader.Server.Transport;
 
 namespace NewWave.FastTrader.Server
 {
     public class Startup
     {
-        public void Configuration(IAppBuilder app)
-        {
-            // Branch the pipeline here for requests that start with "/signalr"
-            app.Map("/signalr", map =>
-            {
-                // Setup the CORS middleware to run before SignalR.
-                // By default this will allow all origins. You can 
-                // configure the set of origins and/or http verbs by
-                // providing a cors options with a different policy.
-                map.UseCors(CorsOptions.AllowAll);
-                var hubConfiguration = new HubConfiguration
-                {
-                    Resolver = new AutofacSignalRDependencyResolver(App.Container),
+        public IConfiguration Configuration { get; }
 
-                };
-                // Run the SignalR pipeline. We're not using MapSignalR
-                // since this branch already runs under the "/signalr"
-                // path.
-                map.RunSignalR(hubConfiguration);
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
+            services.AddSignalR();
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            // Register your dependencies here
+            builder.RegisterType<AutofacSignalRDependencyResolver>()
+                   .As<DefaultDependencyResolver>()
+                   .WithParameter("container", App.Container)
+                   .SingleInstance();
+        }
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            //if (env.IsDevelopment())
+            //{
+                //app.UseDeveloperExceptionPage();
+            //}
+
+            app.UseRouting();
+
+            app.UseCors("AllowAll");
+
+            app.UseEndpoints(endpoints =>
+            {
+                //endpoints.MapHub("/signalr");
             });
         }
     }

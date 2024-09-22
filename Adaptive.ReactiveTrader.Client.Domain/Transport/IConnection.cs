@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNet.SignalR.Client;
+using System;
 using System.Reactive;
-using Microsoft.AspNet.SignalR.Client;
 
 namespace NewWave.FastTrader.Client.Domain.Transport
 {
